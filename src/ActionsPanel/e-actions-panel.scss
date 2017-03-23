@@ -1,0 +1,52 @@
+@import '../styles/mixins/icons';
+@import '../styles/mixins/index';
+
+.e-actions-panel {
+  & * { box-sizing: border-box; }
+  background: #ffffff;
+  border: solid 1px #e0e0e0;
+  font-size: 13px;
+  &-section-1,
+  &-section-2 { display: flex; }
+  &-section-1 { border-bottom: 1px solid #e0e0e0; padding: 0 20px 0 30px; align-items: center; height: 55px; }
+  &-section-2 { height: 56px; }
+  &-breadcrumb-item:after { @include angle-double-right-icon(#1f2532); content: ''; width: 13px; height: 13px; display: inline-block; vertical-align: middle; margin: 0 20px; }
+  &-breadcrumb-item:last-child:after { display: none; }
+  &-last-actions-label { margin-right: 20px; white-space: nowrap; }
+  &-button {
+    @include button; margin-right: 10px; width: 45px; height: 30px; border-radius: 3px; border: solid 1px #e0e0e0; text-indent: -99999px; transition: all 0.3s;
+    &.is-back {
+      @include mail-reply-icon(#e0e0e0); background-size: 16px 13px;
+      &.is-active {
+        @include mail-reply-icon(#1f2532); border-color: #1f2532; background-size: 16px 13px;
+        &:hover { @include mail-reply-icon(#fff); background-size: 16px 13px; background-color: #1f2532; }
+      }
+    }
+    &.is-next {
+      @include mail-forward-icon(#e0e0e0); background-size: 16px 13px;
+      &.is-active { @include mail-forward-icon(#1f2532); border-color: #1f2532; background-size: 16px 13px;
+        &:hover { @include mail-forward-icon(#fff); background-size: 16px 13px; background-color: #1f2532; }
+      }
+    }
+  }
+  &-filter-title { margin-right: 20px; }
+  &-filter-box { padding-left: 20px; padding-right: 10px; border-left: 1px solid #e0e0e0; display: flex; width: 100%; align-items: center; }
+  &-last-actions-box { padding-right: 10px; display: flex; align-items: center; padding-left: 30px; flex: 0 0 0; }
+  &-filter-item { white-space: nowrap; text-overflow: ellipsis; position: relative; display: block; }
+  &-filter-item-box { border-radius: 13px; background-color: #e0e0e0; padding: 0 40px 0 20px; height: 25px; line-height: 25px; transition: border-color 0.3s, background 0.3s; border: 1px solid #e0e0e0; display: block;
+  }
+  &-remove {
+    @include close-icon(#dc6263); content: ''; width: 12px; height: 12px; position: absolute; right: 15px; top: 7px; cursor: pointer;
+    &:hover + .e-actions-panel-filter-item-box {
+      border-color: #dc6263;
+      background: white;
+    }
+  }
+  &-scroll-box { flex-grow: 333; }
+
+  @media (max-width: 1400px) {
+    &-last-actions-label { display: none; }
+    &-button:first-child { margin-left: 0; }
+    &-filter-title { display: none; }
+  }
+}
