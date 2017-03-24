@@ -37,19 +37,27 @@ class Scroller extends React.Component {
     window.removeEventListener('resize', this.init, false);
   }
 
-  calculateView = (scroll) => {
-    const canScrollNext =
-      this.$container.offsetWidth - scroll - this.props.step >=
-      this.$container.scrollWidth;
-    const canScrollBack = scroll + this.props.step + this.$container.offsetWidth >
-      this.$container.offsetWidth;
+  calculateView = (scrollX) => {
+    let isLastPosition = false;
+    let isFirstPosition = false;
+    let scroll = scrollX;
     const isOverflow = this.$container.offsetWidth < this.$container.scrollWidth;
+
+    if (scroll + this.$container.offsetWidth >= this.$container.offsetWidth) {
+      scroll = 0;
+      isLastPosition = true;
+    }
+
+    if (this.$container.offsetWidth - scroll >= this.$container.scrollWidth) {
+      scroll = -(this.$container.scrollWidth - this.$container.offsetWidth);
+      isFirstPosition = true;
+    }
 
     return ({
       isOverflow,
-      isFirstPosition: canScrollNext,
-      isLastPosition: canScrollBack,
-      scroll: isOverflow ? this.state.scroll : 0,
+      isFirstPosition,
+      isLastPosition,
+      scroll,
     });
   }
 
@@ -60,28 +68,20 @@ class Scroller extends React.Component {
 
   slide = (direction) => {
     let scroll;
-    let isLastPosition = false;
-    let isFirstPosition = false;
+
 
     if (direction === 'next') {
       scroll = this.state.scroll + this.props.step;
-      if (scroll + this.$container.offsetWidth > this.$container.offsetWidth) {
-        scroll = 0;
-        isLastPosition = true;
-      }
     } else {
       scroll = this.state.scroll - this.props.step;
-      if (this.$container.offsetWidth - scroll >= this.$container.scrollWidth) {
-        scroll = -(this.$container.scrollWidth - this.$container.offsetWidth);
-        isFirstPosition = true;
-      }
     }
 
-    this.setState({
-      scroll,
-      isLastPosition,
-      isFirstPosition,
-    });
+    // this.setState({
+    //   scroll,
+    //   isLastPosition,
+    //   isFirstPosition,
+    // });
+    this.setState(this.calculateView(scroll));
   }
 
   handleSlideBack = () => { this.slide('next'); }
