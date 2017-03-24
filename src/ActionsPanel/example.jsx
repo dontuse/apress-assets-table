@@ -6,8 +6,9 @@ import Scroller from '../Scroller/Scroller';
 import {block} from '../utils';
 
 const b = block('e-actions-panel');
+const example = block('example');
 
-export default class ButtonExample extends React.Component {
+export default class ActionsPanelExample extends React.Component {
   state = {
     backHistory: true,
     nextHistory: false,
@@ -38,7 +39,7 @@ export default class ButtonExample extends React.Component {
   render() {
     const state = this.state;
     return (
-      <div>
+      <div style={{margin: '20px 0 20px 370px'}} className={example}>
         <h3>ActionsPanel:</h3>
         <ActionsPanel
           onActionBack={this.historyBack}
@@ -50,7 +51,9 @@ export default class ButtonExample extends React.Component {
         >
           <Scroller>
             <a className={b('breadcrumb-item')} href=''>Все группы</a>
-            <a className={b('breadcrumb-item')} href=''>Труба</a>
+            {[...new Array(10)].map((el, i) =>
+              <a key={i} className={b('breadcrumb-item')} href=''>Труба</a>
+            )}
             <span className={b('breadcrumb-item')}>Труба металлическая</span>
           </Scroller>
         </ActionsPanel>

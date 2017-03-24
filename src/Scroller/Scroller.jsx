@@ -1,5 +1,6 @@
 /* eslint react/no-unused-prop-types: 0 */
 import React, {PropTypes} from 'react';
+import _throttle from 'lodash/throttle';
 import {block} from '../utils';
 import './e-scroller.scss';
 
@@ -14,19 +15,21 @@ class Scroller extends React.Component {
   }
 
   static defaultProps = {
+    mix: '',
     step: 100,
     wrapped: false,
+  }
+
+  state = {
+    offset: 0,
+    isOverflow: false,
     isLastPosition: false,
     isFirstPosition: false,
   }
 
-  state = {
-    scroll: 0,
-    isOverflow: false,
-  }
-
   componentDidMount() {
-    window.addEventListener('resize', this.init, false);
+    window.addEventListener('resize', this.handleWindowResize, false);
+    this.init();
   }
 
   componentWillReceiveProps() {
@@ -34,22 +37,24 @@ class Scroller extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.init, false);
+    window.removeEventListener('resize', this.handleWindowResize, false);
   }
 
-  calculateView = (scrollX) => {
+  handleWindowResize = _throttle(() => { this.init(); }, 500);
+
+  calculateView = (offsetX) => {
     let isLastPosition = false;
     let isFirstPosition = false;
-    let scroll = scrollX;
+    let offset = offsetX;
     const isOverflow = this.$container.offsetWidth < this.$container.scrollWidth;
 
-    if (scroll + this.$container.offsetWidth >= this.$container.offsetWidth) {
-      scroll = 0;
+    if (offset + this.$container.offsetWidth >= this.$container.offsetWidth) {
+      offset = 0;
       isLastPosition = true;
     }
 
-    if (this.$container.offsetWidth - scroll >= this.$container.scrollWidth) {
-      scroll = -(this.$container.scrollWidth - this.$container.offsetWidth);
+    if (this.$container.offsetWidth - offset >= this.$container.scrollWidth) {
+      offset = -(this.$container.scrollWidth - this.$container.offsetWidth);
       isFirstPosition = true;
     }
 
@@ -57,31 +62,24 @@ class Scroller extends React.Component {
       isOverflow,
       isFirstPosition,
       isLastPosition,
-      scroll,
+      offset,
     });
   }
 
   init = () => {
-    this.setState(this.calculateView(this.state.scroll));
+    this.setState(this.calculateView(this.state.offset));
   }
 
-
   slide = (direction) => {
-    let scroll;
-
+    let offset;
 
     if (direction === 'next') {
-      scroll = this.state.scroll + this.props.step;
+      offset = this.state.offset + this.props.step;
     } else {
-      scroll = this.state.scroll - this.props.step;
+      offset = this.state.offset - this.props.step;
     }
 
-    // this.setState({
-    //   scroll,
-    //   isLastPosition,
-    //   isFirstPosition,
-    // });
-    this.setState(this.calculateView(scroll));
+    this.setState(this.calculateView(offset));
   }
 
   handleSlideBack = () => { this.slide('next'); }
@@ -90,8 +88,13 @@ class Scroller extends React.Component {
 
   handleWell = (e) => {
     if (this.state.isOverflow) {
-      e.preventDefault();
-      this.slide(e.deltaY > 0 ? 'next' : 'prev');
+      if (e.deltaY > 0 && !this.state.isLastPosition) {
+        this.slide('next');
+        e.preventDefault();
+      } else if (e.deltaY < 0 && !this.state.isFirstPosition) {
+        this.slide('back');
+        e.preventDefault();
+      }
     }
   }
 
@@ -119,7 +122,7 @@ class Scroller extends React.Component {
             })}
           >
             <div
-              style={{left: state.scroll}}
+              style={{left: state.offset}}
               ref={(node) => { this.$container = node; }}
               className={b('container')}
             >
@@ -131,14 +134,12 @@ class Scroller extends React.Component {
               {!state.isLastPosition &&
                 <button
                   onClick={this.handleSlideBack}
-                  // disabled={!state.isFirstPosition}
                   type='button' className={b('button').is({back: true})}
                 />
               }
               {true &&
                 <button
                   onClick={this.handleSlideNext}
-                  // disabled={!state.isLastPosition}
                   type='button' className={b('button').is({next: true})}
                 />
               }

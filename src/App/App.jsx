@@ -43,9 +43,7 @@ class App extends React.Component {
         <div>
           <ScrollerExample />
         </div>
-        <div style={{margin: '20px 0 20px 370px'}} className={b}>
-          <ActionsPanelExample />
-        </div>
+        <ActionsPanelExample />
         <div className={b('table')}>
           <TableExample tableData={this.props.tableData} />
         </div>

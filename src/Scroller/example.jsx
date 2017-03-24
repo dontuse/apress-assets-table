@@ -6,13 +6,13 @@ import {block} from '../utils';
 
 const b = block('example');
 
-export default class ButtonExample extends React.Component {
+export default class ScrollerExample extends React.Component {
 
   render() {
     return (
       <div className={b('wrapper')}>
         <h3>Scroller:</h3>
-        <Scroller mix={b('test-mix other-mix')} wrapped step={200}>
+        <Scroller mix={b('test-mix other-mix').is({modificator: true})()} wrapped step={200}>
           <div className={b('test-box')}>osakdoaskdoasdk</div>
           <div className={b('test-box')}>osakdoaskdoasdk</div>
           <div className={b('test-box')}>osakdoaskdoasdk</div>

@@ -9,7 +9,7 @@ const b = block('e-actions-panel');
 class ActionsPanel extends React.Component {
   render() {
     const props = this.props;
-    // const state = this.state;
+
     return (
       <div className={b.mix(props.mix)}>
         <div className={b('container')}>

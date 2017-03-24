@@ -8,7 +8,7 @@
   font-size: 13px;
   &-section-1,
   &-section-2 { display: flex; }
-  &-section-1 { border-bottom: 1px solid #e0e0e0; padding: 0 20px 0 30px; align-items: center; height: 55px; }
+  &-section-1 { border-bottom: 1px solid #e0e0e0; padding: 0 10px 0 30px; align-items: center; height: 55px; }
   &-section-2 { height: 56px; }
   &-breadcrumb-item:after { @include angle-double-right-icon(#1f2532); content: ''; width: 13px; height: 13px; display: inline-block; vertical-align: middle; margin: 0 20px; }
   &-breadcrumb-item:last-child:after { display: none; }
