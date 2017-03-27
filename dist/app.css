@@ -1424,6 +1424,20 @@ li.rc-select-dropdown-menu-item-divider {
   .e-actions-panel-filter-title {
     display: none;
   }
+}.e-checkbox {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: solid 1px #e0e0e0;
+  border-radius: 2.7px;
+  text-indent: -99999px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.e-checkbox.is-checked {
+  background: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjYTNiZDQ5IiB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNjcxIDU2NnEwIDQwLTI4IDY4bC03MjQgNzI0LTEzNiAxMzZxLTI4IDI4LTY4IDI4dC02OC0yOGwtMTM2LTEzNi0zNjItMzYycS0yOC0yOC0yOC02OHQyOC02OGwxMzYtMTM2cTI4LTI4IDY4LTI4dDY4IDI4bDI5NCAyOTUgNjU2LTY1N3EyOC0yOCA2OC0yOHQ2OCAyOGwxMzYgMTM2cTI4IDI4IDI4IDY4eiIvPjwvc3ZnPg==") 50%/contain no-repeat;
 }body {
   font-family: 'OpenSans';
 }

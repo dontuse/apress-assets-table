@@ -9,6 +9,7 @@ import ComboSelectExample from '../ComboSelect/example';
 import TableExample from '../Table/example';
 import ScrollerExample from '../Scroller/example';
 import ActionsPanelExample from '../ActionsPanel/example';
+import CheckboxExample from '../Checkbox/example';
 
 import * as actions from './actions';
 import {block} from '../utils';
@@ -31,6 +32,7 @@ class App extends React.Component {
         <div className={b}>
           <ButtonExample />
         </div>
+        <CheckboxExample />
         <div className={b}>
           <TogglerExample />
         </div>

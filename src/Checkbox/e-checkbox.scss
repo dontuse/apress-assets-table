@@ -1,0 +1,6 @@
+@import '../styles/mixins/icons';
+
+.e-checkbox {
+  box-sizing: border-box; width: 16px; height: 16px; background: white; border: solid 1px #e0e0e0; border-radius: 2.7px; text-indent: -99999px; cursor: pointer; display: inline-block;
+  &.is-checked { @include check-icon($color: #a3bd49); }
+}
